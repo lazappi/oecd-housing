@@ -13,7 +13,11 @@ Options:
 
 
 def download_country_codes():
-    """Download country codes from Wikipedia"""
+    """
+    Download country codes from Wikipedia
+
+    :return: DataFrame containing country codes
+    """
     import pandas as pd
     import requests
     from bs4 import BeautifulSoup
