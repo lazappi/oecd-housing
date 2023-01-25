@@ -56,6 +56,7 @@ def main():
 
     print(f"Reading input from '{file}'...")
     input = read_csv(file, sep="\t")
+    print(input)
     output = tidy_country_codes(input)
     print(output)
     print(f"Writing output to '{out_file}'...")
