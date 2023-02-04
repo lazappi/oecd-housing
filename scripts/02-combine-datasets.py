@@ -52,6 +52,18 @@ def combine_datasets(country_codes, house_prices, property_tax):
     # Move country name column
     combined.insert(1, "Country", combined.pop("Country"))
 
+    # Remove countries with incomplete years
+    print("Removing countries with incomplete years...")
+    # Filter years after 2020
+    combined = combined[combined["Year"] <= 2020]
+    # Get list of countries with complete years
+    complete_countries = (
+        combined.groupby("Code3")
+        .filter(lambda x: min(x["Year"]) == 2000)["Code3"]
+        .unique()
+    )
+    combined = combined[combined["Code3"].isin(complete_countries)]
+
     return combined
 
 

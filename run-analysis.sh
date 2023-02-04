@@ -16,6 +16,6 @@ echo "Tidying property tax..."
 echo "Combining datasets..."
 ./scripts/02-combine-datasets.py \\
     --country-codes data/01-tidied/country-codes.tsv \\
-    --house-prices data/01-tidied/house_prices.tsv \\
+    --house-prices data/01-tidied/house-prices.tsv \\
     --property-tax data/01-tidied/property-tax.tsv \\
     --out-file data/02-combined.tsv
