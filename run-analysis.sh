@@ -19,3 +19,7 @@ echo "Combining datasets..."
     --house-prices data/01-tidied/house-prices.tsv \\
     --property-tax data/01-tidied/property-tax.tsv \\
     --out-file data/02-combined.tsv
+
+# ==== 03. PLOT VARIABLES ==== #
+echo "Plotting Real Price Index..."
+./scripts/03-plot-RPI.py --out-file output/03-RPI-barplot.png data/02-combined.tsv
