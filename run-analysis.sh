@@ -14,16 +14,34 @@ echo "Tidying property tax..."
 
 # ==== 02. COMBINE DATASETS ==== #
 echo "Combining datasets..."
-./scripts/02-combine-datasets.py \\
-    --country-codes data/01-tidied/country-codes.tsv \\
-    --house-prices data/01-tidied/house-prices.tsv \\
-    --property-tax data/01-tidied/property-tax.tsv \\
+./scripts/02-combine-datasets.py \
+    --country-codes data/01-tidied/country-codes.tsv \
+    --house-prices data/01-tidied/house-prices.tsv \
+    --property-tax data/01-tidied/property-tax.tsv \
     --out-file data/02-combined.tsv
 
 # ==== 03. PLOT VARIABLES ==== #
 echo "Plotting Real Price Index..."
-./scripts/03-plot-RPI.py \\
-    --out-file output/03-RPI-barplot.png \\
-    --var RealPriceIndex\\
-    --label "Real Price Index" \\
+./scripts/03-plot-barplot.py \
+    --out-file output/03-RPI-barplot.png \
+    --var RealPriceIndex \
+    --label "Real Price Index" \
+    data/02-combined.tsv
+echo "Plotting Price to Income Ratio..."
+./scripts/03-plot-barplot.py \
+    --out-file output/03-PriceRatio-barplot.png \
+    --var PriceIncomeRatio \
+    --label "Price to Income Ratio" \
+    data/02-combined.tsv
+echo "Plotting Percent GDP..."
+./scripts/03-plot-barplot.py \
+    --out-file output/03-PctGDP-barplot.png \
+    --var PctGDP \
+    --label "Housing Tax Percentage of GDP" \
+    data/02-combined.tsv
+echo "Plotting Percent Total Tax..."
+./scripts/03-plot-barplot.py \
+    --out-file output/03-PctTotalTax-barplot.png \
+    --var PctTotalTax \
+    --label "Housing Tax Percentage of Total Tax" \
     data/02-combined.tsv
