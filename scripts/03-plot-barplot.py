@@ -81,7 +81,6 @@ def plot_current(combined, var, label, colours, ax=None):
     """
 
     import seaborn as sns
-    import matplotlib.pyplot as plt
 
     # Filter to most recent year and sort
     plot_data = combined[combined["Year"] == max(combined["Year"])]
@@ -89,18 +88,19 @@ def plot_current(combined, var, label, colours, ax=None):
     # Plot bar chart
     sns.barplot(x=var, y="CountryLabel", data=plot_data, palette=colours, ax=ax)
 
-    plt.axvline(x=0, color="black")
+    ax.axvline(x=0, color="black")
 
     # Add title and labels
     ax.set_title(f"2020 {label}", loc="left")
     ax.set(xlabel=None, ylabel=None, yticklabels=[])
 
     # Label bars
-    ax = label_bars(
+    limits = label_bars(
         ax,
         labels=plot_data["CountryLabel"].cat.categories,
         values=list(plot_data[var]),
     )
+    ax.set_xlim(limits[0], limits[1])
 
     return ax
 
@@ -120,7 +120,6 @@ def plot_change(combined, var, label, colours, ax=None):
 
     import seaborn as sns
     import pandas as pd
-    import matplotlib.pyplot as plt
 
     # Filter to most recent year and sort by RealPriceIndex
     plot_data = combined.groupby("Code3", sort=False).apply(
@@ -144,7 +143,7 @@ def plot_change(combined, var, label, colours, ax=None):
         x="Change", y="CountryLabel", data=plot_data, palette=colours, ax=ax
     )
 
-    plt.axvline(x=0, color="black")
+    ax.axvline(x=0, color="black")
 
     # Add title and labels
     ax.set_title(f"Change in {label} since 2000", loc="left")
@@ -193,44 +192,68 @@ def label_bars(ax, labels, values):
     """
 
     from numpy import sign
+    from matplotlib.artist import Artist
+
+    fig = ax.get_figure()
+    renderer = fig.canvas.get_renderer()
 
     padding = 0.01 * max(values)
-    limits = [min(values), max(values) + padding]
-    if min(values) < 0:
-        limits[0] = min(values) - padding
+    limits = [min(0, min(values)) - padding, max(values) + padding]
 
+    # Loop over labels
     for idx, label in enumerate(labels):
+
+        # Set initial position and alignment
         value = values[idx]
+        x_pos = 0 + sign(value) * padding
+
+        align = "left"
         if value < 0:
-            width = abs(min(values))
             align = "right"
-        else:
-            width = max(values)
-            align = "left"
 
-        label_width = len(label) * 0.013
-        if label_width > (abs(value) / width):
-            x_pos = value
-            colour = "#374043"
-
-            x_width = x_pos + sign(value) * (2 * label_width * width + padding)
-            if x_width > limits[1]:
-                limits[1] = x_width
-            elif x_width < limits[0]:
-                limits[0] = x_width
-
-        else:
-            x_pos = 0
-            colour = "white"
-
-        ax.text(
-            x=x_pos + sign(value) * padding,
+        # Try to plot the label
+        text = ax.text(
+            x=x_pos,
             y=idx + 0.15,
             s=label,
-            color=colour,
+            color="white",
             fontsize=12,
             horizontalalignment=align,
         )
+
+        # Get the dimensions of the label in data coordinates
+        bounding_box = text.get_window_extent(renderer=renderer).transformed(
+            ax.transData.inverted()
+        )
+        # Divide by 2 because there are two subplots in the figure
+        text_width = bounding_box.width / 2
+
+        # If the label is longer than the bar, move it to after the bar
+        if text_width > value:
+
+            # Remove the current label
+            Artist.remove(text)
+
+            # Set new position
+            x_pos = value + sign(value) * padding
+
+            ax.text(
+                x=x_pos,
+                y=idx + 0.15,
+                s=label,
+                color="#374043",
+                fontsize=12,
+                horizontalalignment=align,
+            )
+
+            # Get the far edge of the label
+            text_limit = x_pos + sign(value) * (text_width + padding)
+
+            # Update the plot limits if needed
+            if text_limit > limits[1]:
+                limits[1] = text_limit
+            elif text_limit < limits[0]:
+                limits[0] = text_limit
 
     return limits
 
