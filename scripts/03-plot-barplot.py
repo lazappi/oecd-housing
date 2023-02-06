@@ -44,8 +44,8 @@ def plot_barplot(combined, var, label):
     combined["Code3"] = pd.Categorical(
         combined["Code3"], categories=order_data["Code3"]
     )
-    combined["Country"] = pd.Categorical(
-        combined["Country"], categories=order_data["Country"]
+    combined["CountryLabel"] = pd.Categorical(
+        combined["CountryLabel"], categories=order_data["CountryLabel"]
     )
     combined.sort_values(by=["Code3", "Year"], inplace=True)
 
@@ -87,7 +87,7 @@ def plot_current(combined, var, label, colours, ax=None):
     plot_data = combined[combined["Year"] == max(combined["Year"])]
 
     # Plot bar chart
-    sns.barplot(x=var, y="Country", data=plot_data, palette=colours, ax=ax)
+    sns.barplot(x=var, y="CountryLabel", data=plot_data, palette=colours, ax=ax)
 
     plt.axvline(x=0, color="black")
 
@@ -98,7 +98,7 @@ def plot_current(combined, var, label, colours, ax=None):
     # Label bars
     ax = label_bars(
         ax,
-        labels=plot_data["Country"].cat.categories,
+        labels=plot_data["CountryLabel"].cat.categories,
         values=list(plot_data[var]),
     )
 
@@ -127,20 +127,22 @@ def plot_change(combined, var, label, colours, ax=None):
         lambda x: pd.Series(
             data=[
                 x["Code3"].iloc[0],
-                x["Country"].iloc[0],
+                x["CountryLabel"].iloc[0],
                 x[var][x["Year"] == min(x["Year"])].iloc[0],
                 x[var][x["Year"] == max(x["Year"])].iloc[0],
             ],
-            index=["Code3", "Country", "First", "Last"],
+            index=["Code3", "CountryLabel", "First", "Last"],
         )
     )
     plot_data["Change"] = plot_data["Last"] - plot_data["First"]
-    plot_data["Country"] = pd.Categorical(
-        plot_data["Country"], categories=combined["Country"].cat.categories
+    plot_data["CountryLabel"] = pd.Categorical(
+        plot_data["CountryLabel"], categories=combined["CountryLabel"].cat.categories
     )
 
     # Plot bar chart
-    ax = sns.barplot(x="Change", y="Country", data=plot_data, palette=colours, ax=ax)
+    ax = sns.barplot(
+        x="Change", y="CountryLabel", data=plot_data, palette=colours, ax=ax
+    )
 
     plt.axvline(x=0, color="black")
 
@@ -150,7 +152,7 @@ def plot_change(combined, var, label, colours, ax=None):
 
     # Label bars
     limits = label_bars(
-        ax, labels=plot_data["Country"].cat.categories, values=plot_data["Change"]
+        ax, labels=plot_data["CountryLabel"].cat.categories, values=plot_data["Change"]
     )
     ax.set_xlim(limits[0], limits[1])
 

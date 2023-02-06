@@ -52,6 +52,20 @@ def combine_datasets(country_codes, house_prices, property_tax):
     # Move country name column
     combined.insert(1, "Country", combined.pop("Country"))
 
+    print("Adding country labels...")
+    combined["CountryLabel"] = combined["Country"]
+    # Replace country names with labels
+    combined["CountryLabel"] = combined["CountryLabel"].replace(
+        {
+            "United Kingdom of Great Britain and Northern Ireland (the)": "United Kingdom",
+            "Korea (the Republic of)": "Republic of Korea",
+            "United States of America (the)": "United States",
+            "Netherlands (the)": "Netherlands",
+        }
+    )
+    combined["CountryLabel"] = combined["CountryLabel"] + " (" + combined["Code3"] + ")"
+    combined.insert(2, "CountryLabel", combined.pop("CountryLabel"))
+
     # Remove countries with incomplete years
     print("Removing countries with incomplete years...")
     # Filter years after 2020
