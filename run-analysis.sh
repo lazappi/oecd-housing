@@ -22,4 +22,8 @@ echo "Combining datasets..."
 
 # ==== 03. PLOT VARIABLES ==== #
 echo "Plotting Real Price Index..."
-./scripts/03-plot-RPI.py --out-file output/03-RPI-barplot.png data/02-combined.tsv
+./scripts/03-plot-RPI.py \\
+    --out-file output/03-RPI-barplot.png \\
+    --var RealPriceIndex\\
+    --label "Real Price Index" \\
+    data/02-combined.tsv

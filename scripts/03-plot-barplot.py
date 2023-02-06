@@ -1,22 +1,26 @@
 #!/usr/bin/env python
 
 """
-Plot Real Price Index
+Plot a bar plot showing the current value of a variable by country and the change over time
 
 Usage:
-    03-plot-RPI.py --out-file=<path> [options] <file>
+    03-plot-barplot.py --out-file=<path> --var=<str> --label=<str> [options] <file>
 
 Options:
     -h --help            Show this screen.
     --out-file=<path>    Path to output file.
+    --var=<str>          Name of the variable to plot.
+    --label=<str>        Label for the variable.
 """
 
 
-def plot_rpi(combined):
+def plot_barplot(combined, var, label):
     """
     Plot Real Price Index
 
     :param combined: DataFrame containing combined dataset
+    :param var: Name of the variable to plot
+    :param label: Label for the variable
 
     :return: matplotlib axes object
     """
@@ -36,7 +40,7 @@ def plot_rpi(combined):
     plt.subplots_adjust(wspace=0.1)
 
     order_data = combined[combined["Year"] == max(combined["Year"])]
-    order_data = order_data.sort_values(by="RealPriceIndex", ascending=False)
+    order_data = order_data.sort_values(by=var, ascending=False)
     combined["Code3"] = pd.Categorical(
         combined["Code3"], categories=order_data["Code3"]
     )
@@ -46,8 +50,8 @@ def plot_rpi(combined):
     combined.sort_values(by=["Code3", "Year"], inplace=True)
 
     colours = get_colours(combined)
-    plot_rpi_current(combined, colours, ax=axs[0])
-    plot_rpi_change(combined, colours, ax=axs[1])
+    plot_current(combined, var, label, colours, ax=axs[0])
+    plot_change(combined, var, label, colours, ax=axs[1])
 
     # Add source
     fig.text(
@@ -63,11 +67,13 @@ def plot_rpi(combined):
     return fig
 
 
-def plot_rpi_current(combined, colours, ax=None):
+def plot_current(combined, var, label, colours, ax=None):
     """
     Plot curent Real Price Index
 
     :param combined: DataFrame containing combined dataset
+    :param var: Name of the variable to plot
+    :param label: Label for the variable
     :param colours: List of colours for each country
     :param ax: matplotlib axes object to use
 
@@ -81,29 +87,31 @@ def plot_rpi_current(combined, colours, ax=None):
     plot_data = combined[combined["Year"] == max(combined["Year"])]
 
     # Plot bar chart
-    sns.barplot(x="RealPriceIndex", y="Country", data=plot_data, palette=colours, ax=ax)
+    sns.barplot(x=var, y="Country", data=plot_data, palette=colours, ax=ax)
 
     plt.axvline(x=0, color="black")
 
     # Add title and labels
-    ax.set_title("2020 Real Price Index", loc="left")
+    ax.set_title(f"2020 {label}", loc="left")
     ax.set(xlabel=None, ylabel=None, yticklabels=[])
 
     # Label bars
     ax = label_bars(
         ax,
         labels=plot_data["Country"].cat.categories,
-        values=list(plot_data["RealPriceIndex"]),
+        values=list(plot_data[var]),
     )
 
     return ax
 
 
-def plot_rpi_change(combined, colours, ax=None):
+def plot_change(combined, var, label, colours, ax=None):
     """
     Plot change in Real Price Index
 
     :param combined: DataFrame containing combined dataset
+    :param var: Name of the variable to plot
+    :param label: Label for the variable
     :param colours: List of colours for each country
     :param ax: matplotlib axes object to use
 
@@ -120,8 +128,8 @@ def plot_rpi_change(combined, colours, ax=None):
             data=[
                 x["Code3"].iloc[0],
                 x["Country"].iloc[0],
-                x["RealPriceIndex"][x["Year"] == min(x["Year"])].iloc[0],
-                x["RealPriceIndex"][x["Year"] == max(x["Year"])].iloc[0],
+                x[var][x["Year"] == min(x["Year"])].iloc[0],
+                x[var][x["Year"] == max(x["Year"])].iloc[0],
             ],
             index=["Code3", "Country", "First", "Last"],
         )
@@ -137,7 +145,7 @@ def plot_rpi_change(combined, colours, ax=None):
     plt.axvline(x=0, color="black")
 
     # Add title and labels
-    ax.set_title("Change in Real Price Index since 2000", loc="left")
+    ax.set_title(f"Change in {label} since 2000", loc="left")
     ax.set(xlabel=None, ylabel=None, yticklabels=[])
 
     # Label bars
@@ -173,7 +181,7 @@ def get_colours(plot_data):
 
 def label_bars(ax, labels, values):
     """
-    Get country colours
+    Label bars on a bar chart
 
     :param ax: matplotlib axes object to use
     :param labels: Labels for each bar
@@ -234,12 +242,14 @@ def main():
 
     file = args["<file>"]
     out_file = args["--out-file"]
+    var = args["--var"]
+    label = args["--label"]
 
     print(f"Reading data from '{file}'...")
     input = read_csv(file, sep="\t")
     print(input)
-    print("Plotting RPI...")
-    output = plot_rpi(input)
+    print(f"Plotting bar plot of {var} ({label})...")
+    output = plot_barplot(input, var, label)
     print(output)
     print(f"Writing output to '{out_file}'...")
     output.savefig(out_file, bbox_inches="tight")
