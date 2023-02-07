@@ -16,13 +16,13 @@ Options:
 
 def plot_barplot(combined, var, label):
     """
-    Plot Real Price Index
+    Plot bar plot
 
     :param combined: DataFrame containing combined dataset
     :param var: Name of the variable to plot
     :param label: Label for the variable
 
-    :return: matplotlib axes object
+    :return: matplotlib figure object
     """
 
     import matplotlib.pyplot as plt
@@ -69,7 +69,7 @@ def plot_barplot(combined, var, label):
 
 def plot_current(combined, var, label, colours, ax=None):
     """
-    Plot curent Real Price Index
+    Plot bar plot of current values
 
     :param combined: DataFrame containing combined dataset
     :param var: Name of the variable to plot
@@ -82,7 +82,7 @@ def plot_current(combined, var, label, colours, ax=None):
 
     import seaborn as sns
 
-    # Filter to most recent year and sort
+    # Filter to most recent year
     plot_data = combined[combined["Year"] == max(combined["Year"])]
 
     # Plot bar chart
@@ -107,7 +107,7 @@ def plot_current(combined, var, label, colours, ax=None):
 
 def plot_change(combined, var, label, colours, ax=None):
     """
-    Plot change in Real Price Index
+    Plot bar plot of changes
 
     :param combined: DataFrame containing combined dataset
     :param var: Name of the variable to plot
@@ -121,7 +121,7 @@ def plot_change(combined, var, label, colours, ax=None):
     import seaborn as sns
     import pandas as pd
 
-    # Filter to most recent year and sort by RealPriceIndex
+    # Calculate change for each country
     plot_data = combined.groupby("Code3", sort=False).apply(
         lambda x: pd.Series(
             data=[
