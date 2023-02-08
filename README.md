@@ -21,6 +21,7 @@ You can see the final report at https://lazappi.github.io/oecd-housing/.
   - `03-plot-scatterplot.py` - Plot the relationship between two variables and their changes over time
 - `_quarto.yml` - Quarto config file
 - `index.qmd` - Quarto file used to write the final report
+- `LICENSE` - MIT license
 - `README.md` - This README
 - `run-analysis.sh` - Shell script to run the analysis steps in order
 
@@ -28,4 +29,6 @@ You can see the final report at https://lazappi.github.io/oecd-housing/.
 
 The housing and taxation statistics were downloaded from the OECD stats explorer https://stats.oecd.org/>.
 
-Country code information was download from the Wikipedia ISO Country Codes page https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
+Country code information was download from the Wikipedia ISO Country Codes page https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes.
+
+All data from these sources is covered by their respective licences.
