@@ -28,7 +28,7 @@ You can see the final report at https://lazappi.github.io/oecd-housing/.
 
 ## Sources
 
-The housing and taxation statistics were downloaded from the OECD stats explorer https://stats.oecd.org/>.
+The housing and taxation statistics were downloaded from the OECD stats explorer https://stats.oecd.org/.
 
 Country code information was download from the Wikipedia ISO Country Codes page https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes.
 
