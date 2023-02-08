@@ -20,6 +20,7 @@ You can see the final report at https://lazappi.github.io/oecd-housing/.
   - `03-plot-barplot.py` - Plot bar plots showing values for a variable and their change over time
   - `03-plot-scatterplot.py` - Plot the relationship between two variables and their changes over time
 - `_quarto.yml` - Quarto config file
+- `environment.yml` - Conda environment file
 - `index.qmd` - Quarto file used to write the final report
 - `LICENSE` - MIT license
 - `README.md` - This README
