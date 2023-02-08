@@ -45,3 +45,51 @@ echo "Plotting Percent Total Tax..."
     --var PctTotalTax \
     --label "Housing Tax Percentage of Total Tax" \
     data/02-combined.tsv
+echo "Plotting Real Price Index vs Price to Income Ratio..."
+./scripts/03-plot-scatterplot.py \
+    --out-file output/03-RPI-PriceRatio-scatterplot.png \
+    --x-var RealPriceIndex \
+    --x-label "Real Price Index" \
+    --y-var PriceIncomeRatio \
+    --y-label "Price to Income Ratio" \
+    data/02-combined.tsv
+echo "Plotting Percent Total Tax vs Percent GDP..."
+./scripts/03-plot-scatterplot.py \
+    --out-file output/03-PctTotalTax-PctGDP-scatterplot.png \
+    --x-var PctTotalTax \
+    --x-label "Housing Tax Percentage of Total Tax" \
+    --y-var PctGDP \
+    --y-label "Housing Tax Percentage of GDP" \
+    data/02-combined.tsv
+echo "Percent GDP vs Real Price Index..."
+./scripts/03-plot-scatterplot.py \
+    --out-file output/03-PctGDP-RPI-scatterplot.png \
+    --x-var PctGDP \
+    --x-label "Housing Tax Percentage of GDP" \
+    --y-var RealPriceIndex \
+    --y-label "Real Price Index" \
+    data/02-combined.tsv
+echo "Percent Total Tax vs Real Price Index..."
+./scripts/03-plot-scatterplot.py \
+    --out-file output/03-PctTotalTax-RPI-scatterplot.png \
+    --x-var PctTotalTax \
+    --x-label "Housing Tax Percentage of Total Tax" \
+    --y-var RealPriceIndex \
+    --y-label "Real Price Index" \
+    data/02-combined.tsv
+echo "Percent GDP vs Price Income Ratio..."
+./scripts/03-plot-scatterplot.py \
+    --out-file output/03-PctGDP-PriceRatio-scatterplot.png \
+    --x-var PctGDP \
+    --x-label "Housing Tax Percentage of GDP" \
+    --y-var PriceIncomeRatio \
+    --y-label "Price to Income Ratio" \
+    data/02-combined.tsv
+echo "Pct Total Tax vs Price Income Ratio..."
+./scripts/03-plot-scatterplot.py \
+    --out-file output/03-PctTotalTax-PriceRatio-scatterplot.png \
+    --x-var PctTotalTax \
+    --x-label "Housing Tax Percentage of Total Tax" \
+    --y-var PriceIncomeRatio \
+    --y-label "Price to Income Ratio" \
+    data/02-combined.tsv
