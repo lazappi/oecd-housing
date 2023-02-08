@@ -1,6 +1,6 @@
 project:
   title: "OECD Housing"
-  output-dir: site
+  output-dir: docs
 
 toc: true
 number-sections: true
