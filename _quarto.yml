@@ -1,0 +1,8 @@
+project:
+  title: "OECD Housing"
+  output-dir: site
+
+toc: true
+number-sections: true
+
+editor: source

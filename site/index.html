@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.280">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>OECD Housing Data</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/quarto.js"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="index_files/libs/quarto-html/anchor.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="index_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="index_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="toc-section-number">1</span>  Introduction</a></li>
+  <li><a href="#the-data" id="toc-the-data" class="nav-link" data-scroll-target="#the-data"><span class="toc-section-number">2</span>  The data</a>
+  <ul class="collapse">
+  <li><a href="#real-price-index" id="toc-real-price-index" class="nav-link" data-scroll-target="#real-price-index"><span class="toc-section-number">2.1</span>  Real Price Index</a></li>
+  <li><a href="#price-to-income-ratio" id="toc-price-to-income-ratio" class="nav-link" data-scroll-target="#price-to-income-ratio"><span class="toc-section-number">2.2</span>  Price to income ratio</a></li>
+  <li><a href="#housing-tax-percentage-of-gdp" id="toc-housing-tax-percentage-of-gdp" class="nav-link" data-scroll-target="#housing-tax-percentage-of-gdp"><span class="toc-section-number">2.3</span>  Housing tax percentage of GDP</a></li>
+  <li><a href="#housing-tax-percentage-of-total-tax" id="toc-housing-tax-percentage-of-total-tax" class="nav-link" data-scroll-target="#housing-tax-percentage-of-total-tax"><span class="toc-section-number">2.4</span>  Housing tax percentage of total tax</a></li>
+  </ul></li>
+  <li><a href="#what-effect-does-taxation-have-on-housing" id="toc-what-effect-does-taxation-have-on-housing" class="nav-link" data-scroll-target="#what-effect-does-taxation-have-on-housing"><span class="toc-section-number">3</span>  What effect does taxation have on housing?</a>
+  <ul class="collapse">
+  <li><a href="#relationship-between-housing-variables" id="toc-relationship-between-housing-variables" class="nav-link" data-scroll-target="#relationship-between-housing-variables"><span class="toc-section-number">3.1</span>  Relationship between housing variables</a></li>
+  <li><a href="#relationship-between-taxation-variables" id="toc-relationship-between-taxation-variables" class="nav-link" data-scroll-target="#relationship-between-taxation-variables"><span class="toc-section-number">3.2</span>  Relationship between taxation variables</a></li>
+  <li><a href="#relationships-between-taxation-and-housing-costs" id="toc-relationships-between-taxation-and-housing-costs" class="nav-link" data-scroll-target="#relationships-between-taxation-and-housing-costs"><span class="toc-section-number">3.3</span>  Relationships between taxation and housing costs</a>
+  <ul class="collapse">
+  <li><a href="#taxation-and-real-price-index" id="toc-taxation-and-real-price-index" class="nav-link" data-scroll-target="#taxation-and-real-price-index"><span class="toc-section-number">3.3.1</span>  Taxation and Real Price Index</a></li>
+  </ul></li>
+  <li><a href="#taxation-and-price-to-income-ratio" id="toc-taxation-and-price-to-income-ratio" class="nav-link" data-scroll-target="#taxation-and-price-to-income-ratio"><span class="toc-section-number">3.4</span>  Taxation and price to income ratio</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">4</span>  Conclusion</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">OECD Housing Data</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<p>This document presents a short analysis of housing data from the Organisation for Economic Co-operation and Development (OECD). There are two aspects we are going to look at, the cost and affordability of housing and the amount of taxation associated with it. We are interested both in how this aspects have changed in different countries over time but also how they relate to each other. For example it could be that countries with higher rates of housing taxation have lower housing costs (because taxation increases the cost of purchasing a house) or that that countries with higher tax rates are encouraged to increase the cost of housing in order to generate more tax revenue. We will also highlight a few countries of interest that stand out in the dataset, specifically New Zealand, Canada, Sweden and Japan.</p>
+</section>
+<section id="the-data" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> The data</h1>
+<p>The data we will look at has been downloaded as CSV files from the OECD stats explorer (<a href="https://stats.oecd.org/" class="uri">https://stats.oecd.org/</a>). The OECD produces many different statistics about both housing and taxation summarised in different ways but we will just look at a few of the simpler annual statistics (you can see some of their analysis of <a href="https://data.oecd.org/price/housing-prices.htm">housing statistics</a> and <a href="https://data.oecd.org/tax/tax-on-property.htm">housing taxation</a> on the OECD data website). After cleaning and tidying the data we have values for 23 countries from 2000 to 2020 as well as the OECD averages for each year.</p>
+<p>Let’s have a look at the individual statistics we have.</p>
+<section id="real-price-index" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="real-price-index"><span class="header-section-number">2.1</span> Real Price Index</h2>
+<p>The Real Price Index is a country and seasonally adjusted measure of housing prices that takes into account the (to some degree) the economic situation of each country. It is indexed to the value in 2015 so that each country has a value of 100 in 2015 and the values for other years are relative to this point. Because of the way it is calculated it is not really appropriate to compare exact values between countries but we can compare changes over time.</p>
+<p>These bar plots show both the Real Price Index for 2020 (the last year in our dataset) for each country and the change in the Real Price Index since 2000.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<figure class="figure">
+<img src="output/03-RPI-barplot.png" title="Real Price Index" class="img-fluid figure-img" alt="Bar plot of Real Price Index in 2020 and the change since 2000 for selected OECD countries">
+</figure>
+<p></p><figcaption class="figure-caption">Bar plot of Real Price Index in 2020 and the change since 2000</figcaption><p></p>
+</figure>
+</div>
+<p>We can see that most countries have seen a significant increase over the last two decades with most countries having an increase of between 30-60% since 2020. There are a few notable exceptions from this. New Zealand, Canada and Sweden have all seen greater increases with New Zealand having the greatest increase of over 80%. On the other hand we see that Portugal, Greece and Italy have similar real housing prices compared to 2000, perhaps related to the fact that these were some of the European countries most affected by the 2008 global financial crisis. The only country with a significant decrease in real housing prices is Japan, which has seen a decrease of around 20% since 2000.</p>
+</section>
+<section id="price-to-income-ratio" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="price-to-income-ratio"><span class="header-section-number">2.2</span> Price to income ratio</h2>
+<p>In contrast to the Real Price Index which measures the cost of housing the price-to-income ratio attempts to measure housing affordability. It is calculated by dividing house prices by average disposable income so that higher values indicate less affordable housing. The values we have here have been standardised and indexed in order to take into accoun the long term average in each country.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<figure class="figure">
+<img src="output/03-PriceRatio-barplot.png" title="Price to income ratio" class="img-fluid figure-img" alt="Bar plot of price to income ratio in 2020 and the change since 2000 for selected OECD countries">
+</figure>
+<p></p><figcaption class="figure-caption">Bar plot of price to income ratio in 2020 and the change since 2000</figcaption><p></p>
+</figure>
+</div>
+<p>The overall trend here is similar to what we saw for the the real price index, although there are more countries with smaller changes suggesting that in those countries housing price growth has been more closely aligned with income growth. New Zealand, Canada and Sweden again stand out as both having the highest price to income ratios as well as the greatest increases since 2000. Japan again has the biggest decrease but this time it is joined by the Republic of Korea and Ireland which also have decreases in the price to income ratio (and therefore relatively more affordable housing).</p>
+</section>
+<section id="housing-tax-percentage-of-gdp" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="housing-tax-percentage-of-gdp"><span class="header-section-number">2.3</span> Housing tax percentage of GDP</h2>
+<p>The first housing taxation measure considers the amount of tax paid on housing as a percentage of each country’s gross domestic product (GDP). GDP is the standard measure of economic output so by this measure lets us see housing taxation relative to the economic situation of each country.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<figure class="figure">
+<img src="output/03-PctGDP-barplot.png" title="Housing tax percent of GDP" class="img-fluid figure-img" alt="Bar plot of housing taxation as a percentage of GDP in 2020 and the change since 2000 for selected OECD countries">
+</figure>
+<p></p><figcaption class="figure-caption">Bar plot of housing taxation as a percentage of GDP in 2020 and the change since 2000</figcaption><p></p>
+</figure>
+</div>
+<p>This is quite different to what we saw for the housing statistics. There is quite a large range of values (between around 0.5% and 4%) and the changes since 2000 are not as well linked to the current values. Our countries of interset are also spread across the range of values. Canada has seen the greatest increase in housing taxation as a percentage of GDP over the last two decades and now has the largest value in the dataset, while Sweden has followed the opposite trend with signficant decreases leading it to have one of the lowest values. New Zealand and Japan are both somewhere in the middle, having moderate housing taxation compared to GDP that have not changed much since 2000.</p>
+</section>
+<section id="housing-tax-percentage-of-total-tax" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="housing-tax-percentage-of-total-tax"><span class="header-section-number">2.4</span> Housing tax percentage of total tax</h2>
+<p>The second taxation measure considers housing taxation as a percentage of the total tax paid. While this doesn’t tell us anything about the levels of taxation compared to economic output it may give us more of an idea of the taxation priorities of each country.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<figure class="figure">
+<img src="output/03-PctTotalTax-barplot.png" title="Housing tax percent of total tax" class="img-fluid figure-img" alt="Bar plot of housing taxation as a percentage of total tax in 2020 and the change since 2000 for selected OECD countries">
+</figure>
+<p></p><figcaption class="figure-caption">Bar plot of housing taxation as a percentage of total tax in 2020 and the change since 2000</figcaption><p></p>
+</figure>
+</div>
+<p>We see both similarities and differences compared to the GDP taxation measure. Sweden has again seen decreases and has one of the lowest rates of housing taxation while Canada has seen increases and has one of the highest rates. Although both the Republic of Korea and the United States have seen bigger increases and have higher rates of housing taxation than Canada by this measure. New Zealand again sits right near the OECD average and hasn’t changed over the last twenty years but while Japan has a similar ranking of it’s 2020 values as we saw with the GDP measure it has seen a significiant decrease in housing taxation as a percentage of total tax. It is also interesting to see the range of values here with several countries only receiving around 3% of their total tax revenue from housing taxation while for others this is greater than 10%.</p>
+</section>
+</section>
+<section id="what-effect-does-taxation-have-on-housing" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> What effect does taxation have on housing?</h1>
+<p>Now that we have looked at the individual statistics let’s consider the relationships between them and see if we can see if we can see any patterns between taxation and housing prices.</p>
+<section id="relationship-between-housing-variables" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="relationship-between-housing-variables"><span class="header-section-number">3.1</span> Relationship between housing variables</h2>
+<p>First let’s see how the two housing variables compare to each other. These scatter plots show the 2020 Real Price Index compared to the 2020 price to income ratio for each country as well as the comparison in changes since 2000. The lines indicate a linear trend between the two variables will the shaded area shows a confidence interval for this linear model.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<figure class="figure">
+<img src="output/03-RPI-PriceRatio-scatterplot.png" title="Real Price Index vs price to income ratio" class="img-fluid figure-img" alt="Scatter plot showing the relationship between Real Price Index and price to income ratio in 2020 and the changes since 2000 for selected OECD countries">
+</figure>
+<p></p><figcaption class="figure-caption">Scatter plot showing the relationship between Real Price Index and price to income ratio in 2020 and the changes since 2000</figcaption><p></p>
+</figure>
+</div>
+<p>There is weak positive relationship between the 2020 values of the two housing variables. In general countries with higher housing prices also have higher price to income ratios but there are several countries that are similar in one but different in the other. The comparision of changes since 2000 shows a clearer picture and we can see that countries that have seen increases in house prices have also seen a decreases in housing affordability. As we saw earlier New Zealand, Canada and Sweden stand out at the top of these plots while Japan is an outlier at the bottom.</p>
+</section>
+<section id="relationship-between-taxation-variables" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="relationship-between-taxation-variables"><span class="header-section-number">3.2</span> Relationship between taxation variables</h2>
+<p>The next comparison we will look at is the relationship between the two taxation variables.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<figure class="figure">
+<img src="output/03-PctTotalTax-PctGDP-scatterplot.png" title="Housing tax percent of GDP vs housing tax percent of total tax" class="img-fluid figure-img" alt="Scatter plot showing the relationship between housing tax as a percentage of GDP and housing tax as a percentage of total tax in 2020 and the changes since 2000 for selected OECD countries">
+</figure>
+<p></p><figcaption class="figure-caption">Scatter plot showing the relationship between housing tax as a percentage of GDP and housing tax as a percentage of total tax in 2020 and the changes since 2000</figcaption><p></p>
+</figure>
+</div>
+<p>The trend here is clear whether we look at the 2020 values or the changes over time. In both cases we see that a high value or a big change in one variable is very likely to mean a high value or big change for the other.</p>
+</section>
+<section id="relationships-between-taxation-and-housing-costs" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="relationships-between-taxation-and-housing-costs"><span class="header-section-number">3.3</span> Relationships between taxation and housing costs</h2>
+<p>Now that we have seen how the statistics that measure similar things compare to each other, let’s look at the (hopfully) more interesting part, how housing measures and taxation are related to each other.</p>
+<section id="taxation-and-real-price-index" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="taxation-and-real-price-index"><span class="header-section-number">3.3.1</span> Taxation and Real Price Index</h3>
+<p>The first measure we will look at is the Real Price Index. These scatter plots show how the Real Price Index compares to the housing taxation measures. Because the taxation measures are so related we will consider them together.</p>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<p><img src="output/03-PctGDP-RPI-scatterplot.png" title="Housing tax percent of GDP vs Real Price Index" class="img-fluid" alt="Scatter plot showing the relationship between housing tax as a percentage of GDP and Real Price Index in 2020 and the changes since 2000 for selected OECD countries"></p>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<figure class="figure">
+<img src="output/03-PctTotalTax-RPI-scatterplot.png" title="Housing tax percent of total tax vs Real Price Index" class="img-fluid figure-img" alt="Scatter plot showing the relationship between housing tax as a percentage of total tax and Real Price Index in 2020 and the changes since 2000 for selected OECD countries">
+</figure>
+<p></p><figcaption class="figure-caption">Scatter plots showing the relationship between housing tax as a percentage of GDP or total tax and Real Price Index in 2020 and the changes since 2000</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>There is a weak negative trend here with countries that have higher housing taxation tending to have lower house prices in 2020. We don’t see a clear relationship between the changes in these measures though. If we consider New Zealand, Canada and Sweden we see that all three countries have seen similar large increases in the Real Price Index but either negative (Sweden), neutral (New Zealand) or positive (Canada) changes in housing taxation. This suggests that changes in housing taxation are not a major cause of changes in house prices (although there is a lot we haven’t considered here and we would expect there to be some delay between a change in taxation and any effect).</p>
+</section>
+</section>
+<section id="taxation-and-price-to-income-ratio" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="taxation-and-price-to-income-ratio"><span class="header-section-number">3.4</span> Taxation and price to income ratio</h2>
+<p>What about the relationship between taxation and housing affordability?</p>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<p><img src="output/03-PctGDP-PriceRatio-scatterplot.png" title="Housing tax percent of GDP vs price to income ratio" class="img-fluid" alt="Scatter plot showing the relationship between housing tax as a percentage of GDP and price to income ratio in 2020 and the changes since 2000 for selected OECD countries"></p>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<figure class="figure">
+<img src="output/03-PctTotalTax-PriceRatio-scatterplot.png" title="Housing tax percent of total tax vs price to income ratio" class="img-fluid figure-img" alt="Scatter plot showing the relationship between housing tax as a percentage of total tax and price to income ratio in 2020 and the changes since 2000 for selected OECD countries">
+</figure>
+<p></p><figcaption class="figure-caption">Scatter plots showing the relationship between housing tax as a percentage of GDP or total tax and price to income ratio in 2020 and the changes since 2000</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>This is probably less clear than when looking at the Real Price Index. There may be a similar weak negative trend but this is uncertaion and is likely to be affected by the Republic of Korea which is a large negative outlier. Again we see that New Zealand, Canada and Sweden have similar increases in the price to income ration but different changes in housing taxation. Overall it seems that taxation is a less effective predictor of the price to income ratio than the Real Price Index. An obvious explanation for this is that the price to income ratio includes disposal income which is affected by many factors including taxation.</p>
+</section>
+</section>
+<section id="conclusion" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Conclusion</h1>
+<p>So, what did we find out?</p>
+<ul>
+<li>New Zealand, Canada and Sweden have all seen large increases in house prices since 2000 but have different current levels of house prices</li>
+<li>These countries also have the highest price to income ratios (lowest affordability) and the biggest increases in this measure since 2000</li>
+<li>Japan is the only country that has seen significant decreases in house prices since 2000. This has lead to a lower price to income ratio (higher affordability) and may be the cause of a decrease in the percentage of it’s tax revenue that comes from housing taxation</li>
+<li>There may be weak relationships between housing taxation and housing costs, with higher taxation leading to lower house prices and higher affordability. However, these relationships are not clear and may be affected by outliers.</li>
+<li>Changes in taxation policy do not seem to be a major cause of changes in house prices with countries that have seen large increases in house prices having different trends in the amount of housing tax collected</li>
+<li>Overall, the relationship between housing and taxation is (unsurpisingly) much more complex than what we have considered here and if we wanted to properly understand what causes changes in house prices there are many other factors we would need to consider, many of which are probably country specific</li>
+</ul>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

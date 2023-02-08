@@ -93,3 +93,9 @@ echo "Pct Total Tax vs Price Income Ratio..."
     --y-var PriceIncomeRatio \
     --y-label "Price to Income Ratio" \
     data/02-combined.tsv
+
+# ==== 90. RENDER REPORT ==== #
+echo "Rendering HTML report..."
+quarto render
+
+echo "Done!"
